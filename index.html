@@ -23,6 +23,16 @@
 
     <!-- 1. 홈 화면 (Home Screen) -->
     <section class="screen active" id="screen-home">
+      <!-- 우측 상단 설정 버튼 -->
+      <div class="home-header">
+        <button class="btn-icon" id="btn-settings" aria-label="게임 설정">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+
       <div class="logo-area">
         <h1 class="game-title">Memory<br>Moment</h1>
         <p class="game-subtitle">순간 기억력 테스트</p>
@@ -146,8 +156,40 @@
         <p class="modal-text">정말 게임을 포기하시겠습니까?<br>진행 중인 레벨은 클리어되지 않습니다.</p>
         <div class="modal-buttons">
           <button class="btn-modal btn-cancel" id="btn-abandon-cancel">계속하기</button>
-          <button class="btn-modal btn-confirm" id="btn-abandon-confirm">포기하기</button>
+          <button class="btn-modal btn-danger" id="btn-abandon-confirm">포기하기</button>
         </div>
+      </div>
+    </div>
+
+    <!-- 설정 모달 -->
+    <div class="modal-overlay" id="modal-settings">
+      <div class="modal-content settings-modal-content">
+        <h3 class="modal-title">설정</h3>
+        <div class="settings-list">
+          <div class="settings-item">
+            <span class="settings-label">🎵 배경음악 (BGM)</span>
+            <label class="switch">
+              <input type="checkbox" id="toggle-bgm" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="settings-item">
+            <span class="settings-label">🔊 효과음 (SFX)</span>
+            <label class="switch">
+              <input type="checkbox" id="toggle-sfx" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="settings-item">
+            <span class="settings-label">🎨 테마 (Theme)</span>
+            <div class="theme-selector">
+              <button class="btn-theme-option" data-theme="cyber" title="Midnight Cyber">🌌</button>
+              <button class="btn-theme-option" data-theme="aurora" title="Aurora Dream">🧪</button>
+              <button class="btn-theme-option" data-theme="sunset" title="Warm Sunset">🌅</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn-modal btn-confirm" id="btn-settings-close">닫기</button>
       </div>
     </div>
 

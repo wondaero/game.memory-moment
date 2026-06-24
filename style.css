@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
 
-:root {
+/* 기본 (Midnight Cyber) 테마 및 공통 테마 변수 */
+:root, body.theme-cyber {
   --bg-gradient: radial-gradient(circle at center, #1b163a 0%, #080616 100%);
   --panel-bg: rgba(255, 255, 255, 0.04);
   --panel-border: rgba(255, 255, 255, 0.08);
@@ -15,6 +16,54 @@
   --color-success-glow: rgba(16, 185, 129, 0.4);
   --color-danger: #ef4444;        /* Crimson Red */
   --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --app-bg: rgba(13, 10, 28, 0.7);
+  --app-shadow: 0 0 80px rgba(168, 85, 247, 0.1);
+  --app-border: var(--panel-border);
+}
+
+/* Aurora Dream 테마 (민트/아쿠아 오로라 스타일 다크 테마) */
+body.theme-aurora {
+  --bg-gradient: radial-gradient(circle at center, #062f2f 0%, #021212 100%);
+  --panel-bg: rgba(255, 255, 255, 0.03);
+  --panel-border: rgba(255, 255, 255, 0.06);
+  --text-primary: #e2fbf5;
+  --text-secondary: #6cb6a3;
+  --color-primary: #0df5c8;       /* Neon Mint */
+  --color-primary-glow: rgba(13, 245, 200, 0.4);
+  --color-secondary: #0ea5e9;     /* Neon Sky Blue */
+  --color-secondary-glow: rgba(14, 165, 233, 0.4);
+  --color-accent: #f43f5e;        /* Rose Red */
+  --color-success: #10b981;
+  --color-success-glow: rgba(16, 185, 129, 0.4);
+  --color-danger: #ef4444;
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --app-bg: rgba(4, 18, 18, 0.75);
+  --app-shadow: 0 0 80px rgba(13, 245, 200, 0.1);
+  --app-border: var(--panel-border);
+}
+
+/* Warm Sunset 테마 (따뜻한 피치/베이지 스타일 라이트 테마) */
+body.theme-sunset {
+  --bg-gradient: radial-gradient(circle at center, #fef3c7 0%, #fde68a 100%);
+  --panel-bg: rgba(255, 255, 255, 0.35);
+  --panel-border: rgba(217, 119, 6, 0.15);
+  --text-primary: #78350f;
+  --text-secondary: #b45309;
+  --color-primary: #d97706;       /* Warm Amber */
+  --color-primary-glow: rgba(217, 119, 6, 0.25);
+  --color-secondary: #ea580c;     /* Orange */
+  --color-secondary-glow: rgba(234, 88, 12, 0.25);
+  --color-accent: #db2777;        /* Pink Accent */
+  --color-success: #059669;
+  --color-success-glow: rgba(5, 150, 105, 0.25);
+  --color-danger: #dc2626;
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --app-bg: rgba(255, 255, 255, 0.65);
+  --app-shadow: 0 24px 60px rgba(120, 53, 15, 0.15), 0 0 40px rgba(217, 119, 6, 0.1);
+  --app-border: var(--panel-border);
 }
 
 * {
@@ -34,6 +83,7 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
 }
 
 /* 모바일 폰 셸 크기의 메인 컨테이너 */
@@ -43,12 +93,12 @@ body {
   height: 100vh;
   height: 100dvh; /* 모바일 동적 뷰포트 높이 대응 */
   max-height: 850px;
-  background: rgba(13, 10, 28, 0.7);
+  background: var(--app-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--panel-border);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 
-              0 0 80px rgba(168, 85, 247, 0.1);
+  border: 1px solid var(--app-border);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 
+              var(--app-shadow);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1219,12 +1269,183 @@ body {
 }
 
 .btn-modal.btn-confirm {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px var(--color-primary-glow);
+}
+
+.btn-modal.btn-confirm:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px var(--color-primary-glow);
+}
+
+.btn-modal.btn-danger {
   background: linear-gradient(135deg, var(--color-danger) 0%, #b91c1c 100%);
   color: #fff;
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
 
-.btn-modal.btn-confirm:active {
+.btn-modal.btn-danger:active {
   transform: scale(0.97);
   box-shadow: 0 2px 6px rgba(239, 68, 68, 0.1);
 }
+
+/* 6. 설정 화면 및 토글 스위치, 테마 셀렉터 스타일 */
+.home-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 10px 0 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+}
+
+.btn-icon {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--panel-border);
+  color: var(--text-primary);
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-icon:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.settings-modal-content {
+  background: var(--app-bg);
+  border: 1px solid var(--app-border);
+}
+
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 20px 0 24px 0;
+  text-align: left;
+}
+
+.settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+}
+
+/* 라이트 테마 대응 설정 아이템 배경 조정 */
+body.theme-sunset .settings-item {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.settings-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 글래스모피즘 스위치 토글 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--panel-border);
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 24px;
+}
+
+body.theme-sunset .slider {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #fff;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary-glow);
+  box-shadow: 0 0 8px var(--color-primary-glow);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+  background-color: #fff;
+}
+
+/* 테마 셀렉터 */
+.theme-selector {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-theme-option {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--panel-border);
+  font-size: 1.25rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+body.theme-sunset .btn-theme-option {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.btn-theme-option:active {
+  transform: scale(0.9);
+}
+
+.btn-theme-option.active {
+  background: var(--color-primary) !important;
+  border-color: var(--text-primary) !important;
+  box-shadow: 0 0 12px var(--color-primary-glow);
+}
+

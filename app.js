@@ -1,7 +1,15 @@
-// Web Audio API를 사용한 게임 효과음 합성 클래스
+// Web Audio API를 사용한 게임 효과음 및 실시간 BGM 합성 클래스
 class GameAudio {
   constructor() {
     this.ctx = null;
+    this.bgmEnabled = localStorage.getItem('memory_moment_bgm_enabled') !== 'false';
+    this.sfxEnabled = localStorage.getItem('memory_moment_sfx_enabled') !== 'false';
+    this.bgmPlaying = false;
+    this.bgmGain = null;
+    this.schedulerInterval = null;
+    this.bgmTempo = 100; // 템포 (BPM)
+    this.bgmNextNoteTime = 0.0;
+    this.bgmBeatIndex = 0;
   }
 
   // 사용자의 첫 터치/클릭 시 오디오 컨텍스트 초기화 (브라우저 보안 정책 대응)
@@ -14,8 +22,167 @@ class GameAudio {
     }
   }
 
+  // BGM 재생 시작
+  startBgm() {
+    this.init();
+    if (!this.ctx) return;
+    
+    // 이미 BGM이 스케줄되고 있다면 중복 실행 차단
+    if (this.bgmPlaying) return;
+    this.bgmPlaying = true;
+
+    if (!this.bgmGain) {
+      this.bgmGain = this.ctx.createGain();
+      this.bgmGain.connect(this.ctx.destination);
+    }
+
+    // BGM이 활성화 상태인지에 따라 초기 gain(음량) 스무스 설정
+    const targetVolume = this.bgmEnabled ? 0.035 : 0;
+    this.bgmGain.gain.setValueAtTime(targetVolume, this.ctx.currentTime);
+
+    this.bgmNextNoteTime = this.ctx.currentTime;
+    this.bgmBeatIndex = 0;
+
+    // 25ms 마다 아르페지오 스케줄링 체크
+    this.schedulerInterval = setInterval(() => {
+      this.scheduler();
+    }, 25);
+  }
+
+  // Web Audio API 노트 선예약 스케줄러
+  scheduler() {
+    const scheduleAheadTime = 0.1; // 100ms 앞을 보며 예약
+    while (this.bgmNextNoteTime < this.ctx.currentTime + scheduleAheadTime) {
+      this.scheduleNote(this.bgmBeatIndex, this.bgmNextNoteTime);
+      this.advanceNote();
+    }
+  }
+
+  advanceNote() {
+    // 8분음표 단위로 비트 전진
+    const secondsPerBeat = 60.0 / this.bgmTempo / 2;
+    this.bgmNextNoteTime += secondsPerBeat;
+    this.bgmBeatIndex = (this.bgmBeatIndex + 1) % 32; // 32스텝 (16박자 루프)
+  }
+
+  // 코드로 소리 합성: 8비트 감성의 Triangle 파형 아르페지오 + Sine 파형 베이스
+  scheduleNote(beatIndex, time) {
+    if (!this.ctx || !this.bgmGain) return;
+
+    // 4마디 코드 진행 (Cmaj7 -> Am7 -> Dm7 -> G7)
+    const scaleC = [261.63, 329.63, 392.00, 493.88, 523.25, 493.88, 392.00, 329.63]; // Cmaj7
+    const scaleA = [220.00, 261.63, 329.63, 392.00, 440.00, 392.00, 329.63, 261.63]; // Am7
+    const scaleD = [293.66, 349.23, 440.00, 523.25, 587.33, 523.25, 440.00, 349.23]; // Dm7
+    const scaleG = [196.00, 246.94, 293.66, 349.23, 392.00, 349.23, 293.66, 246.94]; // G7
+
+    let freq = 0;
+    const step = beatIndex % 8;
+    
+    if (beatIndex < 8) {
+      freq = scaleC[step];
+    } else if (beatIndex < 16) {
+      freq = scaleA[step];
+    } else if (beatIndex < 24) {
+      freq = scaleD[step];
+    } else {
+      freq = scaleG[step];
+    }
+
+    // 1. 아르페지오 신디사이저 파트
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    
+    osc.connect(gain);
+    gain.connect(this.bgmGain);
+    
+    osc.type = 'triangle'; // 귀를 찌르지 않는 은은한 삼각파
+    osc.frequency.setValueAtTime(freq, time);
+
+    const secondsPerBeat = 60.0 / this.bgmTempo / 2;
+    const noteDuration = secondsPerBeat * 0.9; // 약간의 스타카토 느낌 부여
+
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(0.3, time + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + noteDuration - 0.01);
+
+    osc.start(time);
+    osc.stop(time + noteDuration);
+
+    // 2. 베이스 라인 파트 (각 코드의 1박과 5박에 둥~ 하고 울림)
+    if (beatIndex % 4 === 0) {
+      let baseFreq = 130.81; // C3
+      if (beatIndex === 8 || beatIndex === 12) baseFreq = 110.00; // A2
+      if (beatIndex === 16 || beatIndex === 20) baseFreq = 146.83; // D3
+      if (beatIndex === 24 || beatIndex === 28) baseFreq = 98.00; // G2
+
+      const baseOsc = this.ctx.createOscillator();
+      const baseGain = this.ctx.createGain();
+
+      baseOsc.connect(baseGain);
+      baseGain.connect(this.bgmGain);
+
+      baseOsc.type = 'sine'; // 울림이 깊은 사인파
+      baseOsc.frequency.setValueAtTime(baseFreq, time);
+
+      const baseDuration = secondsPerBeat * 1.8;
+      baseGain.gain.setValueAtTime(0, time);
+      baseGain.gain.linearRampToValueAtTime(0.4, time + 0.05);
+      baseGain.gain.exponentialRampToValueAtTime(0.001, time + baseDuration - 0.05);
+
+      baseOsc.start(time);
+      baseOsc.stop(time + baseDuration);
+    }
+  }
+
+  // 볼륨 제어를 이용해 배경음 일시정지 (스무스 페이드아웃)
+  pauseBgm() {
+    if (!this.bgmPlaying || !this.bgmGain) return;
+    const now = this.ctx ? this.ctx.currentTime : 0;
+    this.bgmGain.gain.linearRampToValueAtTime(0, now + 0.15);
+  }
+
+  // 볼륨 제어를 이용해 배경음 재개 (스무스 페이드인)
+  resumeBgm() {
+    if (!this.bgmPlaying || !this.bgmGain || !this.bgmEnabled) return;
+    const now = this.ctx ? this.ctx.currentTime : 0;
+    this.bgmGain.gain.linearRampToValueAtTime(0.035, now + 0.2);
+  }
+
+  // BGM 타이머 루프를 완전 멈춤
+  stopBgm() {
+    if (this.schedulerInterval) {
+      clearInterval(this.schedulerInterval);
+      this.schedulerInterval = null;
+    }
+    this.bgmPlaying = false;
+  }
+
+  // BGM ON/OFF 토글
+  setBgmEnabled(enabled) {
+    this.bgmEnabled = enabled;
+    localStorage.setItem('memory_moment_bgm_enabled', enabled ? 'true' : 'false');
+    
+    // 오디오 컨텍스트가 로드된 상태에서 스무스하게 볼륨 증감
+    if (this.bgmGain) {
+      const now = this.ctx ? this.ctx.currentTime : 0;
+      this.bgmGain.gain.linearRampToValueAtTime(enabled ? 0.035 : 0, now + 0.25);
+    }
+
+    // 설정은 켰으나 BGM 루프가 아예 안 돌고 있다면 자동 스타트
+    if (enabled && !this.bgmPlaying) {
+      this.startBgm();
+    }
+  }
+
+  // SFX ON/OFF 설정
+  setSfxEnabled(enabled) {
+    this.sfxEnabled = enabled;
+    localStorage.setItem('memory_moment_sfx_enabled', enabled ? 'true' : 'false');
+  }
+
   // 짧은 클릭 사운드
   playClick() {
+    if (!this.sfxEnabled) return;
     this.init();
     if (!this.ctx) return;
 
@@ -38,6 +205,7 @@ class GameAudio {
 
   // 정답을 맞췄을 때 (성공 멜로디)
   playSuccess() {
+    if (!this.sfxEnabled) return;
     this.init();
     if (!this.ctx) return;
 
@@ -66,6 +234,7 @@ class GameAudio {
 
   // 오답 또는 생명 감소 사운드
   playWrong() {
+    if (!this.sfxEnabled) return;
     this.init();
     if (!this.ctx) return;
 
@@ -89,6 +258,7 @@ class GameAudio {
 
   // 카운트다운 틱음 (대기 중 소리)
   playTick() {
+    if (!this.sfxEnabled) return;
     this.init();
     if (!this.ctx) return;
 
@@ -110,6 +280,7 @@ class GameAudio {
 
   // 카운트다운 마지막 시작음
   playStart() {
+    if (!this.sfxEnabled) return;
     this.init();
     if (!this.ctx) return;
 
@@ -131,6 +302,7 @@ class GameAudio {
 
   // 게임 오버 멜로디
   playGameOver() {
+    if (!this.sfxEnabled) return;
     this.init();
     if (!this.ctx) return;
 
@@ -243,6 +415,7 @@ const gameState = {
   timerInterval: null,
   bestLevel: Math.max(parseInt(localStorage.getItem('memory_moment_best_level')) || 1, 11),
   phase: '', // 'countdown', 'memorize', 'input'
+  currentTheme: localStorage.getItem('memory_moment_theme') || 'cyber',
   
   // 게임 일시정지 및 타이머 제어용
   isPaused: false,
@@ -290,15 +463,31 @@ const dom = {
   modalAbandon: document.getElementById('modal-abandon'),
   btnAbandonCancel: document.getElementById('btn-abandon-cancel'),
   btnAbandonConfirm: document.getElementById('btn-abandon-confirm'),
+
+  // 설정 모달 관련 DOM 요소
+  btnSettings: document.getElementById('btn-settings'),
+  modalSettings: document.getElementById('modal-settings'),
+  btnSettingsClose: document.getElementById('btn-settings-close'),
+  toggleBgm: document.getElementById('toggle-bgm'),
+  toggleSfx: document.getElementById('toggle-sfx'),
+  btnThemeOptions: document.querySelectorAll('.btn-theme-option'),
 };
 
 // 초기화 이벤트 등록
 document.addEventListener('DOMContentLoaded', () => {
   initGame();
+
+  // ⭐️ 사용자 첫 터치 시 배경음악 활성화 (보안 정책 대응)
+  document.addEventListener('click', () => {
+    gameAudio.startBgm();
+  }, { once: true });
 });
 
 async function initGame() {
   dom.bestScore.textContent = `Level ${gameState.bestLevel}`;
+
+  // 저장된 테마 불러와서 복원
+  setTheme(gameState.currentTheme);
 
   // 브라우저 뒤로가기 가로채기를 위한 초기 상태 및 popstate 이벤트 리스너 등록
   try {
@@ -324,6 +513,24 @@ async function initGame() {
   dom.btnGameBack.addEventListener('click', onGameBackClick);
   dom.btnAbandonCancel.addEventListener('click', closeAbandonModal);
   dom.btnAbandonConfirm.addEventListener('click', confirmAbandonGame);
+
+  // 설정 관련 버튼 이벤트 연결
+  dom.btnSettings.addEventListener('click', showSettingsModal);
+  dom.btnSettingsClose.addEventListener('click', closeSettingsModal);
+  
+  dom.toggleBgm.addEventListener('change', (e) => {
+    gameAudio.setBgmEnabled(e.target.checked);
+  });
+  dom.toggleSfx.addEventListener('change', (e) => {
+    gameAudio.setSfxEnabled(e.target.checked);
+  });
+
+  dom.btnThemeOptions.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedTheme = btn.getAttribute('data-theme');
+      setTheme(selectedTheme);
+    });
+  });
 
   await loadStages();
 }
@@ -777,6 +984,7 @@ function showFeedback(text, className) {
 }
 
 function showGameOver() {
+  gameAudio.stopBgm();
   gameAudio.playGameOver();
 
   dom.endLevel.textContent = `Level ${gameState.currentLevel}`;
@@ -787,6 +995,7 @@ function showGameOver() {
 }
 
 function showAllClear() {
+  gameAudio.stopBgm();
   dom.allclearScore.textContent = gameState.score;
   dom.bestScore.textContent = `Level 60`;
 
@@ -805,6 +1014,7 @@ function generateRandomNumber(digits) {
 function showStagesScreen() {
   gameAudio.init();
   gameAudio.playClick();
+  gameAudio.startBgm();
 
   // 최고 도달 스테이지 정보 동기화 (테스트 셋업 및 현재 설정 연동)
   gameState.bestLevel = Math.max(parseInt(localStorage.getItem('memory_moment_best_level')) || 1, gameState.currentLevel);
@@ -955,6 +1165,7 @@ function showStagesScreen() {
 function onGameBackClick() {
   gameAudio.init();
   gameAudio.playClick();
+  gameAudio.pauseBgm(); // BGM 임시 일시정지 (볼륨 페이드아웃)
 
   // 이미 모달이 떠 있거나 인게임 상태가 아닌 경우는 오동작 방지
   if (gameState.phase === '') {
@@ -1003,6 +1214,7 @@ function pauseGame() {
 function closeAbandonModal() {
   gameAudio.init();
   gameAudio.playClick();
+  gameAudio.resumeBgm(); // BGM 복원 (볼륨 페이드인)
 
   dom.modalAbandon.classList.remove('show');
   resumeGame();
@@ -1036,6 +1248,7 @@ function resumeGame() {
 function confirmAbandonGame() {
   gameAudio.init();
   gameAudio.playClick();
+  gameAudio.resumeBgm(); // BGM 복원 (볼륨 페이드인)
 
   // 모든 인게임 타이머 리셋
   clearAllGameTimers();
@@ -1096,4 +1309,43 @@ function handlePopState(event) {
 
   // 2. 일반 화면 전환 (popstate에 의한 화면 전환이므로 pushState를 차단하도록 preventPush=true)
   changeScreen(state.screen, true);
+}
+
+// =============================================================================
+// 게임 설정 및 테마 전환 시스템
+// =============================================================================
+
+function showSettingsModal() {
+  gameAudio.init();
+  gameAudio.playClick();
+
+  // 체크박스 상태 동기화
+  dom.toggleBgm.checked = gameAudio.bgmEnabled;
+  dom.toggleSfx.checked = gameAudio.sfxEnabled;
+
+  dom.modalSettings.classList.add('show');
+}
+
+function closeSettingsModal() {
+  gameAudio.init();
+  gameAudio.playClick();
+  dom.modalSettings.classList.remove('show');
+}
+
+function setTheme(themeName) {
+  // body 클래스를 지우고 새 테마 클래스 추가
+  document.body.className = '';
+  document.body.classList.add(`theme-${themeName}`);
+  
+  gameState.currentTheme = themeName;
+  localStorage.setItem('memory_moment_theme', themeName);
+
+  // 설정 창 내 테마 아이콘 버튼들 활성 상태 표시
+  dom.btnThemeOptions.forEach(btn => {
+    if (btn.getAttribute('data-theme') === themeName) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
 }
