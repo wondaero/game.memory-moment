@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Memory Moment - 숫자 기억력 게임</title>
+  <meta name="description" content="순간적으로 보여지는 숫자를 기억하고 맞추는 중독성 넘치는 뇌 풀기 숫자 게임">
+  
+  <!-- SEO 및 모바일 웹 앱 설정 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0d0a21">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 메인 게임 컨테이너 -->
+  <div class="app-container" id="game-container">
+    
+    <!-- 피드백 오버레이 (성공 / 오답 시 팝업) -->
+    <div class="feedback-overlay" id="feedback-overlay">SUCCESS</div>
+
+    <!-- 1. 홈 화면 (Home Screen) -->
+    <section class="screen active" id="screen-home">
+      <div class="logo-area">
+        <h1 class="game-title">Memory<br>Moment</h1>
+        <p class="game-subtitle">순간 기억력 테스트</p>
+      </div>
+
+      <div class="home-decor">
+        <div class="decor-ring"></div>
+        <div class="decor-ring-inner"></div>
+        <div class="decor-number">?</div>
+      </div>
+
+      <div class="score-board">
+        <div class="score-label">BEST RECORD</div>
+        <div class="score-value" id="best-score">Level 1</div>
+      </div>
+
+      <button class="btn-primary" id="btn-start-game">시작하기</button>
+    </section>
+
+    <!-- 1.5. 스테이지 선택 화면 (Stages Screen) -->
+    <section class="screen" id="screen-stages">
+      <div class="stages-header">
+        <button class="btn-back" id="btn-stages-back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </button>
+        <h2 class="stages-title">스테이지 선택</h2>
+      </div>
+      <div class="stages-container">
+        <div class="stages-grid" id="stages-grid">
+          <!-- 1~60 레벨 카드 격자 동적 빌드 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 통합 인게임 화면 (Game Screen - 카운트다운 / 암기 / 입력 통합) -->
+    <section class="screen" id="screen-game">
+      <!-- 카운트다운 전체화면 오버레이 -->
+      <div class="countdown-overlay" id="countdown-overlay">3</div>
+
+      <div class="top-bar">
+        <button class="btn-back" id="btn-game-back" aria-label="게임 포기">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </button>
+        <div class="level-badge">LEVEL <span id="game-level">1</span></div>
+        <div class="hearts-container" id="game-hearts">
+          <!-- JS에서 동적으로 채워짐 -->
+        </div>
+      </div>
+
+      <!-- 상단 제한시간 타이머 바 (암기 페이즈 동안 노출) -->
+      <div class="timer-container" id="timer-container" style="opacity: 0;">
+        <div class="timer-bar" id="timer-bar"></div>
+      </div>
+
+      <!-- 디스플레이 영역 -->
+      <div class="input-display-area">
+        <!-- 실제 답을 쓰고 숫자가 노출될 슬롯 (위치 변화 차단) -->
+        <div class="input-slots" id="input-slots">
+          <!-- JS에서 레벨별 자릿수에 맞춰 칸 생성 -->
+        </div>
+        
+        <div class="shuffle-badge" id="shuffle-badge">
+          ⚡ RANDOM KEYPAD
+        </div>
+      </div>
+
+      <!-- 커스텀 키패드 영역 (준비/암기 시 비활성화) -->
+      <div class="keypad-container" id="keypad">
+        <!-- JS에서 동적 배치 -->
+      </div>
+    </section>
+
+    <!-- 3. 게임오버 화면 (GameOver Screen) -->
+    <section class="screen" id="screen-gameover">
+      <div class="gameover-header">
+        <h2 class="gameover-title">GAME OVER</h2>
+        <p class="gameover-subtitle">당신의 기억력이 한계에 도달했습니다.</p>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-box">
+          <div class="stat-label">도달한 레벨</div>
+          <div class="stat-value highlight" id="end-level">Level 1</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">성공한 횟수</div>
+          <div class="stat-value" id="end-score">0</div>
+        </div>
+      </div>
+
+      <button class="btn-restart" id="btn-restart-game">다시 시작하기</button>
+    </section>
+
+    <!-- 4. 올 클리어 화면 (All Clear Screen) -->
+    <section class="screen" id="screen-allclear">
+      <div class="allclear-header">
+        <div class="trophy-icon">🏆</div>
+        <h2 class="allclear-title">ALL CLEAR</h2>
+        <p class="allclear-subtitle">경이로운 두뇌입니다! 60탄을 정복하셨습니다.</p>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-box">
+          <div class="stat-label">최종 기록</div>
+          <div class="stat-value highlight">Level 60</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">맞춘 숫자 개수</div>
+          <div class="stat-value" id="allclear-score">60</div>
+        </div>
+      </div>
+
+      <button class="btn-restart" id="btn-restart-allclear">처음부터 다시 도전</button>
+    </section>
+
+    <!-- 게임 포기 확인 모달 -->
+    <div class="modal-overlay" id="modal-abandon">
+      <div class="modal-content">
+        <div class="modal-icon">⚠️</div>
+        <h3 class="modal-title">게임 포기</h3>
+        <p class="modal-text">정말 게임을 포기하시겠습니까?<br>진행 중인 레벨은 클리어되지 않습니다.</p>
+        <div class="modal-buttons">
+          <button class="btn-modal btn-cancel" id="btn-abandon-cancel">계속하기</button>
+          <button class="btn-modal btn-confirm" id="btn-abandon-confirm">포기하기</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
