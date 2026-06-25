@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
 
 /* 기본 (Midnight Cyber) 테마 및 공통 테마 변수 */
-:root, body.theme-cyber {
+:root,
+body.theme-cyber {
   --bg-gradient: radial-gradient(circle at center, #1b163a 0%, #080616 100%);
   --panel-bg: rgba(255, 255, 255, 0.04);
   --panel-border: rgba(255, 255, 255, 0.08);
@@ -13,14 +14,19 @@
   --decor-ring-outer: rgba(168, 85, 247, 0.3);
   --decor-ring-inner: rgba(59, 130, 246, 0.2);
   --text-secondary: #94a3b8;
-  --color-primary: #a855f7;       /* Neon Purple */
+  --color-primary: #a855f7;
+  /* Neon Purple */
   --color-primary-glow: rgba(168, 85, 247, 0.4);
-  --color-secondary: #3b82f6;     /* Neon Blue */
+  --color-secondary: #3b82f6;
+  /* Neon Blue */
   --color-secondary-glow: rgba(59, 130, 246, 0.4);
-  --color-accent: #ec4899;        /* Hot Pink */
-  --color-success: #10b981;       /* Emerald Green */
+  --color-accent: #ec4899;
+  /* Hot Pink */
+  --color-success: #10b981;
+  /* Emerald Green */
   --color-success-glow: rgba(16, 185, 129, 0.4);
-  --color-danger: #ef4444;        /* Crimson Red */
+  --color-danger: #ef4444;
+  /* Crimson Red */
   --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   --app-bg: rgba(13, 10, 28, 0.7);
@@ -49,11 +55,14 @@ body.theme-aurora {
   --decor-ring-outer: rgba(13, 245, 200, 0.3);
   --decor-ring-inner: rgba(14, 165, 233, 0.25);
   --text-secondary: #6cb6a3;
-  --color-primary: #0df5c8;       /* Neon Mint */
+  --color-primary: #0df5c8;
+  /* Neon Mint */
   --color-primary-glow: rgba(13, 245, 200, 0.4);
-  --color-secondary: #0ea5e9;     /* Neon Sky Blue */
+  --color-secondary: #0ea5e9;
+  /* Neon Sky Blue */
   --color-secondary-glow: rgba(14, 165, 233, 0.4);
-  --color-accent: #f43f5e;        /* Rose Red */
+  --color-accent: #f43f5e;
+  /* Rose Red */
   --color-success: #10b981;
   --color-success-glow: rgba(16, 185, 129, 0.4);
   --color-danger: #ef4444;
@@ -77,19 +86,24 @@ body.theme-sunset {
   --bg-gradient: radial-gradient(circle at center, #fef3c7 0%, #fde68a 100%);
   --panel-bg: rgba(255, 255, 255, 0.45);
   --panel-border: rgba(217, 119, 6, 0.18);
-  --text-primary: #5c2c06;        /* 가독성을 높이기 위해 짙은 갈색조로 변경 */
+  --text-primary: #5c2c06;
+  /* 가독성을 높이기 위해 짙은 갈색조로 변경 */
   --text-primary-shadow: rgba(92, 44, 6, 0.15);
   --modal-overlay-bg: rgba(253, 230, 138, 0.82);
   --logo-gradient: linear-gradient(135deg, #5c2c06 25%, #d97706 70%, #ea580c 100%);
   --logo-shadow: 0 4px 15px rgba(120, 53, 15, 0.12);
   --decor-ring-outer: rgba(217, 119, 6, 0.3);
   --decor-ring-inner: rgba(234, 88, 12, 0.2);
-  --text-secondary: #92400e;      /* 더 짙은 보조 텍스트 */
-  --color-primary: #d97706;       /* Warm Amber */
+  --text-secondary: #92400e;
+  /* 더 짙은 보조 텍스트 */
+  --color-primary: #d97706;
+  /* Warm Amber */
   --color-primary-glow: rgba(217, 119, 6, 0.25);
-  --color-secondary: #ea580c;     /* Orange */
+  --color-secondary: #ea580c;
+  /* Orange */
   --color-secondary-glow: rgba(234, 88, 12, 0.25);
-  --color-accent: #db2777;        /* Pink Accent */
+  --color-accent: #db2777;
+  /* Pink Accent */
   --color-success: #059669;
   --color-success-glow: rgba(5, 150, 105, 0.25);
   --color-danger: #dc2626;
@@ -133,14 +147,15 @@ body {
   width: 100%;
   max-width: 430px;
   height: 100vh;
-  height: 100dvh; /* 모바일 동적 뷰포트 높이 대응 */
+  height: 100dvh;
+  /* 모바일 동적 뷰포트 높이 대응 */
   max-height: 850px;
   background: var(--app-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--app-border);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 
-              var(--app-shadow);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4),
+    var(--app-shadow);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -166,8 +181,10 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 12px 14px 16px 14px; /* 바깥 여백 전체 축소 */
-  padding-bottom: calc(16px + env(safe-area-inset-bottom)); /* Safe Area 하단 여백 대응 */
+  padding: 12px 14px 16px 14px;
+  /* 바깥 여백 전체 축소 */
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  /* Safe Area 하단 여백 대응 */
   position: absolute;
   top: 0;
   left: 0;
@@ -176,8 +193,8 @@ body {
   opacity: 0;
   pointer-events: none;
   transform: scale(0.96);
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
 }
 
@@ -331,8 +348,8 @@ body {
   border-radius: 16px;
   cursor: pointer;
   width: 100%;
-  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.3), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transition: transform 0.2s, box-shadow 0.2s;
   margin-bottom: 30px;
 }
@@ -405,7 +422,8 @@ body {
   align-items: center;
   min-height: 160px;
   width: 100%;
-  position: relative; /* 카운트다운 레이어 배치용 */
+  position: relative;
+  /* 카운트다운 레이어 배치용 */
 }
 
 /* 카운트다운 전체화면 오버레이 */
@@ -415,8 +433,10 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(8, 6, 22, 0.65); /* 어두운 반투명 암막 */
-  backdrop-filter: blur(3px); /* 유리 블러 효과 */
+  background: rgba(8, 6, 22, 0.65);
+  /* 어두운 반투명 암막 */
+  backdrop-filter: blur(3px);
+  /* 유리 블러 효과 */
   -webkit-backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
@@ -425,17 +445,20 @@ body {
   font-weight: 800;
   color: var(--color-primary);
   text-shadow: 0 0 45px var(--color-primary-glow);
-  z-index: 100; /* 탑바, 하트, 입력 슬롯, 키패드를 모두 덮을 수 있게 */
+  z-index: 100;
+  /* 탑바, 하트, 입력 슬롯, 키패드를 모두 덮을 수 있게 */
   opacity: 0;
   pointer-events: none;
   transform: scale(0.85);
   transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
-  border-radius: inherit; /* 모바일 폰 쉘의 둥근 모서리 대응 */
+  border-radius: inherit;
+  /* 모바일 폰 쉘의 둥근 모서리 대응 */
 }
 
 .countdown-overlay.show {
   opacity: 1;
-  pointer-events: auto; /* 카운트다운 중에 뒷배경 클릭 불가능하게 가드 */
+  pointer-events: auto;
+  /* 카운트다운 중에 뒷배경 클릭 불가능하게 가드 */
   transform: scale(1.05);
 }
 
@@ -460,7 +483,8 @@ body {
 .input-slot {
   flex: 1;
   max-width: 44px;
-  aspect-ratio: 1 / 1.22; /* 너비에 맞게 높이가 동적 계산되어 찌그러짐 방지 */
+  aspect-ratio: 1 / 1.22;
+  /* 너비에 맞게 높이가 동적 계산되어 찌그러짐 방지 */
   border-radius: 10px;
   border: 2px solid var(--slot-border);
   background: var(--slot-bg);
@@ -488,9 +512,21 @@ body {
 
 /* 흔들림 효과 (오답 등) */
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-8px); }
-  40%, 80% { transform: translateX(8px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-8px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(8px);
+  }
 }
 
 .shake {
@@ -534,6 +570,7 @@ body {
   0% {
     color: var(--text-primary);
   }
+
   100% {
     color: transparent;
   }
@@ -553,9 +590,11 @@ body {
 
 .keypad-btn {
   color: var(--text-primary);
-  font-size: clamp(1.2rem, 5vw, 1.5rem); /* 반응형 폰트 */
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  /* 반응형 폰트 */
   font-weight: 600;
-  height: clamp(52px, 8.5vh, 64px); /* 화면 세로 길이에 따른 반응형 높이 */
+  height: clamp(52px, 8.5vh, 64px);
+  /* 화면 세로 길이에 따른 반응형 높이 */
   border-radius: 14px;
   cursor: pointer;
   display: flex;
@@ -564,17 +603,21 @@ body {
   transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s, box-shadow 0.15s;
   background: var(--keypad-btn-bg);
   border: 1px solid var(--keypad-btn-border);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.05); /* 내부 하이라이트 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* 내부 하이라이트 */
 }
 
 /* 키패드 버튼 꾹 눌렀을 때(Active) 네온 번쩍임 효과 추가 */
 .keypad-btn:active {
-  transform: scale(0.92); /* 눌린 깊이감 강조 */
-  background: var(--keypad-btn-active-bg) !important; /* 네온 반투명 스며듦 */
-  border-color: var(--color-primary) !important; /* 네온 테두리 */
-  box-shadow: 0 0 16px var(--color-primary-glow), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transform: scale(0.92);
+  /* 눌린 깊이감 강조 */
+  background: var(--keypad-btn-active-bg) !important;
+  /* 네온 반투명 스며듦 */
+  border-color: var(--color-primary) !important;
+  /* 네온 테두리 */
+  box-shadow: 0 0 16px var(--color-primary-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
   text-shadow: 0 0 8px var(--color-primary-glow);
 }
 
@@ -602,8 +645,8 @@ body {
 .keypad-btn.delete-btn:active {
   background: rgba(236, 72, 153, 0.2) !important;
   border-color: var(--color-accent) !important;
-  box-shadow: 0 0 16px rgba(236, 72, 153, 0.45), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 0 16px rgba(236, 72, 153, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
   text-shadow: 0 0 8px rgba(236, 72, 153, 0.45);
 }
 
@@ -743,8 +786,15 @@ body {
 }
 
 @keyframes floatTrophy {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-10px) scale(1.05); }
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-10px) scale(1.05);
+  }
 }
 
 /* 피드백 메시지 오버레이 (성공/오류 텍스트 애니메이션) */
@@ -778,29 +828,51 @@ body {
 
 /* 애니메이션 키프레임들 */
 @keyframes rotateClockwise {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes rotateCounterClockwise {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
 @keyframes pulseScale {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 @keyframes pulseLight {
-  from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-  to { text-shadow: 0 0 25px rgba(255, 255, 255, 0.6); }
+  from {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+
+  to {
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+  }
 }
 
 /* 스테이지 선택 화면 스타일링 (고급 리스트 개편) */
 #screen-stages {
   justify-content: flex-start;
-  padding: 20px;
+  padding: 12px;
 }
 
 .stages-header {
@@ -851,7 +923,6 @@ body {
 .stages-container {
   flex: 1;
   overflow-y: auto;
-  padding-right: 4px;
   width: 100%;
   mask-image: linear-gradient(to bottom, transparent 0%, #000 3%, #000 97%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 3%, #000 97%, transparent 100%);
@@ -874,8 +945,9 @@ body {
 .stages-grid {
   display: flex;
   flex-direction: column;
-  gap: 0; /* gap을 0으로 만들어 수직선이 끊어지는 현상 원천 방지 */
-  padding: 10px 4px 40px 4px;
+  gap: 0;
+  /* gap을 0으로 만들어 수직선이 끊어지는 현상 원천 방지 */
+  padding: 10px 0;
   position: relative;
 }
 
@@ -883,7 +955,8 @@ body {
 .stage-timeline-item {
   display: flex;
   align-items: center;
-  gap: 0; /* 인디케이터가 숨겨졌으므로 gap을 0으로 설정해 좌측 정렬 밀림 방지 */
+  gap: 0;
+  /* 인디케이터가 숨겨졌으므로 gap을 0으로 설정해 좌측 정렬 밀림 방지 */
   width: 100%;
   position: relative;
   padding-bottom: 14px;
@@ -903,9 +976,11 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 3px;
-  background: rgba(255, 255, 255, 0.08); /* 기본 은은한 수직선 */
+  background: rgba(255, 255, 255, 0.08);
+  /* 기본 은은한 수직선 */
   z-index: 1;
-  display: none; /* 수직 관통선 숨김 */
+  display: none;
+  /* 수직 관통선 숨김 */
 }
 
 /* 첫 번째 노드와 마지막 노드의 바깥 수직 꼬리는 삭제해 마감 처리 */
@@ -919,13 +994,18 @@ body {
 
 /* unlocked 레벨의 세로 라인은 네온 컬러 빛으로 채움 */
 .stage-timeline-item.unlocked .timeline-indicator::before {
-  background: var(--color-secondary); /* 파랑 */
+  background: var(--color-secondary);
+  /* 파랑 */
 }
+
 .stage-timeline-item.unlocked.theme-medium .timeline-indicator::before {
-  background: var(--color-primary); /* 보라 */
+  background: var(--color-primary);
+  /* 보라 */
 }
+
 .stage-timeline-item.unlocked.theme-hard .timeline-indicator::before {
-  background: var(--color-accent); /* 핑크 */
+  background: var(--color-accent);
+  /* 핑크 */
 }
 
 /* 아직 미진입한 locked 레벨 세로선 */
@@ -981,6 +1061,7 @@ body {
     transform: scale(1);
     box-shadow: 0 0 4px currentColor;
   }
+
   to {
     transform: scale(1.25);
     box-shadow: 0 0 12px currentColor;
@@ -1005,11 +1086,12 @@ body {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), 
-              border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   position: relative;
-  overflow: hidden; /* 오버레이 요소 제어용 */
+  overflow: hidden;
+  /* 오버레이 요소 제어용 */
 }
 
 .stage-row:active {
@@ -1020,6 +1102,7 @@ body {
 .stage-row.unlocked.theme-easy {
   border-color: rgba(59, 130, 246, 0.25);
 }
+
 .stage-row.unlocked.theme-easy:active {
   background: rgba(59, 130, 246, 0.06);
   border-color: var(--color-secondary);
@@ -1029,6 +1112,7 @@ body {
 .stage-row.unlocked.theme-medium {
   border-color: rgba(168, 85, 247, 0.25);
 }
+
 .stage-row.unlocked.theme-medium:active {
   background: rgba(168, 85, 247, 0.06);
   border-color: var(--color-primary);
@@ -1038,6 +1122,7 @@ body {
 .stage-row.unlocked.theme-hard {
   border-color: rgba(236, 72, 153, 0.25);
 }
+
 .stage-row.unlocked.theme-hard:active {
   background: rgba(236, 72, 153, 0.06);
   border-color: var(--color-accent);
@@ -1071,6 +1156,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 6px rgba(59, 130, 246, 0.2);
     background: rgba(59, 130, 246, 0.03);
   }
+
   100% {
     box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), 0 0 18px rgba(59, 130, 246, 0.55);
     background: rgba(59, 130, 246, 0.1);
@@ -1082,6 +1168,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 6px rgba(168, 85, 247, 0.2);
     background: rgba(168, 85, 247, 0.03);
   }
+
   100% {
     box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), 0 0 18px rgba(168, 85, 247, 0.55);
     background: rgba(168, 85, 247, 0.1);
@@ -1093,6 +1180,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 6px rgba(236, 72, 153, 0.2);
     background: rgba(236, 72, 153, 0.03);
   }
+
   100% {
     box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), 0 0 18px rgba(236, 72, 153, 0.55);
     background: rgba(236, 72, 153, 0.1);
@@ -1118,7 +1206,8 @@ body {
 /* 배지 그룹 (개행 절대 금지 설정) */
 .stage-badge-container {
   display: flex;
-  flex-wrap: nowrap; /* 개행 완전 방지 */
+  flex-wrap: nowrap;
+  /* 개행 완전 방지 */
   align-items: center;
   gap: 6px;
   max-width: 100%;
@@ -1130,8 +1219,10 @@ body {
   padding: 3px 8px;
   border-radius: 6px;
   letter-spacing: 0.02em;
-  white-space: nowrap; /* 텍스트 개행 완전 방지 */
-  flex-shrink: 0; /* 강제로 줄어들지 않도록 방어 */
+  white-space: nowrap;
+  /* 텍스트 개행 완전 방지 */
+  flex-shrink: 0;
+  /* 강제로 줄어들지 않도록 방어 */
 }
 
 /* 자릿수 배지 (div 미니어처 슬롯 컨테이너) */
@@ -1246,7 +1337,8 @@ body {
   background: rgba(255, 255, 255, 0.005);
   border-color: rgba(255, 255, 255, 0.015);
   box-shadow: none;
-  filter: blur(0.5px); /* 잠긴 텍스트를 약간 흐리게 블러 처리하여 시인성 차별화 */
+  filter: blur(0.5px);
+  /* 잠긴 텍스트를 약간 흐리게 블러 처리하여 시인성 차별화 */
 }
 
 /* 5. 게임 포기 확인 모달 스타일 (Premium Glassmorphism Modal) */
@@ -1276,10 +1368,10 @@ body {
 .modal-content {
   background: var(--app-bg);
   border: 1px solid var(--app-border);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 
-              0 0 30px var(--color-primary-glow);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3),
+    0 0 30px var(--color-primary-glow);
   border-radius: 24px;
-  padding: 30px 24px;
+  padding: 20px 12px;
   width: 85%;
   max-width: 340px;
   text-align: center;
@@ -1475,13 +1567,13 @@ body.theme-sunset .slider {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: var(--color-primary);
   border-color: var(--color-primary-glow);
   box-shadow: 0 0 8px var(--color-primary-glow);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(22px);
   background-color: #fff;
 }
@@ -1519,4 +1611,3 @@ body.theme-sunset .btn-theme-option {
   border-color: var(--text-primary) !important;
   box-shadow: 0 0 12px var(--color-primary-glow);
 }
-
