@@ -962,57 +962,6 @@ body {
   padding-bottom: 14px;
 }
 
-/* 수직 라인을 품은 인디케이터 컨테이너 (현재 원과 선을 아예 제거하기 위해 숨김 처리) */
-.timeline-indicator {
-  display: none;
-}
-
-/* 정교하게 이어지는 수직 라인 (현재 비활성화: 사용자가 라인을 원할 때 display: none; 주석 처리 또는 제거) */
-.timeline-indicator::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 3px;
-  background: rgba(255, 255, 255, 0.08);
-  /* 기본 은은한 수직선 */
-  z-index: 1;
-  display: none;
-  /* 수직 관통선 숨김 */
-}
-
-/* 첫 번째 노드와 마지막 노드의 바깥 수직 꼬리는 삭제해 마감 처리 */
-.stage-timeline-item:first-child .timeline-indicator::before {
-  top: 50%;
-}
-
-.stage-timeline-item:last-child .timeline-indicator::before {
-  bottom: 50%;
-}
-
-/* unlocked 레벨의 세로 라인은 네온 컬러 빛으로 채움 */
-.stage-timeline-item.unlocked .timeline-indicator::before {
-  background: var(--color-secondary);
-  /* 파랑 */
-}
-
-.stage-timeline-item.unlocked.theme-medium .timeline-indicator::before {
-  background: var(--color-primary);
-  /* 보라 */
-}
-
-.stage-timeline-item.unlocked.theme-hard .timeline-indicator::before {
-  background: var(--color-accent);
-  /* 핑크 */
-}
-
-/* 아직 미진입한 locked 레벨 세로선 */
-.stage-timeline-item.locked .timeline-indicator::before {
-  background: rgba(255, 255, 255, 0.03);
-}
-
 /* 타임라인 원형 노드 (Circle Dot) */
 .timeline-dot {
   width: 12px;
@@ -1090,7 +1039,7 @@ body {
     border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* 오버레이 요소 제어용 */
 }
 
@@ -1238,9 +1187,8 @@ body {
 
 /* div 기반 사각형 슬롯 미니어처 */
 .square-dot {
-  width: 9px;
-  height: 11px;
-  border-radius: 2px;
+  width: 8px;
+  height: 8px;
   display: inline-block;
   transition: all 0.2s;
   flex-shrink: 0;
@@ -1306,8 +1254,9 @@ body {
 /* 공통 상태 배지 (우측 상단 절대좌표 겹침 렌더링) */
 .stage-status-badge {
   position: absolute;
-  top: 14px;
-  right: 18px;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
   font-size: 0.65rem;
   font-weight: 800;
   padding: 3.5px 9px;
