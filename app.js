@@ -336,66 +336,84 @@ const gameAudio = new GameAudio();
 
 // stages.json과 동일한 백업 데이터 (로컬 file:// 실행 시 CORS 차단 우회용 Fallback)
 const DEFAULT_STAGES = [
-  { "level": 1, "digits": 4, "showTime": 3.0, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 2, "digits": 4, "showTime": 2.5, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 3, "digits": 4, "showTime": 2.0, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 4, "digits": 4, "showTime": 1.5, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 5, "digits": 4, "showTime": 1.0, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 6, "digits": 4, "showTime": 0.8, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 7, "digits": 4, "showTime": 0.5, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 8, "digits": 4, "showTime": 0.3, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 9, "digits": 4, "showTime": 0.1, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 10, "digits": 4, "showTime": 0.05, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 11, "digits": 4, "showTime": 3.0, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 12, "digits": 4, "showTime": 2.5, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 13, "digits": 4, "showTime": 2.0, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 14, "digits": 4, "showTime": 1.5, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 15, "digits": 4, "showTime": 1.0, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 16, "digits": 4, "showTime": 0.8, "keypadFadeTime": 2, "isShuffledKeypad": true },
-  { "level": 17, "digits": 4, "showTime": 0.5, "keypadFadeTime": 2, "isShuffledKeypad": true },
-  { "level": 18, "digits": 4, "showTime": 0.3, "keypadFadeTime": 2, "isShuffledKeypad": true },
-  { "level": 19, "digits": 4, "showTime": 0.1, "keypadFadeTime": 1, "isShuffledKeypad": true },
-  { "level": 20, "digits": 4, "showTime": 0.05, "keypadFadeTime": 1, "isShuffledKeypad": true },
-  { "level": 21, "digits": 5, "showTime": 3.0, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 22, "digits": 5, "showTime": 2.5, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 23, "digits": 5, "showTime": 2.0, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 24, "digits": 5, "showTime": 1.5, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 25, "digits": 5, "showTime": 1.0, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 26, "digits": 5, "showTime": 0.8, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 27, "digits": 5, "showTime": 0.5, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 28, "digits": 5, "showTime": 0.3, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 29, "digits": 5, "showTime": 0.1, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 30, "digits": 5, "showTime": 0.05, "keypadFadeTime": 0, "isShuffledKeypad": false },
-  { "level": 31, "digits": 5, "showTime": 3.0, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 32, "digits": 5, "showTime": 2.5, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 33, "digits": 5, "showTime": 2.0, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 34, "digits": 5, "showTime": 1.5, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 35, "digits": 5, "showTime": 1.0, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 36, "digits": 5, "showTime": 0.8, "keypadFadeTime": 2, "isShuffledKeypad": true },
-  { "level": 37, "digits": 5, "showTime": 0.5, "keypadFadeTime": 2, "isShuffledKeypad": true },
-  { "level": 38, "digits": 5, "showTime": 0.3, "keypadFadeTime": 2, "isShuffledKeypad": true },
-  { "level": 39, "digits": 5, "showTime": 0.1, "keypadFadeTime": 1, "isShuffledKeypad": true },
-  { "level": 40, "digits": 5, "showTime": 0.05, "keypadFadeTime": 1, "isShuffledKeypad": true },
-  { "level": 41, "digits": 6, "showTime": 3.0, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 42, "digits": 6, "showTime": 2.5, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 43, "digits": 6, "showTime": 2.0, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 44, "digits": 6, "showTime": 1.5, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 45, "digits": 6, "showTime": 1.0, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 46, "digits": 6, "showTime": 0.8, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 47, "digits": 6, "showTime": 0.5, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 48, "digits": 6, "showTime": 0.3, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 49, "digits": 6, "showTime": 0.1, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 50, "digits": 6, "showTime": 0.05, "keypadFadeTime": 0, "isShuffledKeypad": true },
-  { "level": 51, "digits": 6, "showTime": 3.0, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 52, "digits": 6, "showTime": 2.5, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 53, "digits": 6, "showTime": 2.0, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 54, "digits": 6, "showTime": 1.5, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 55, "digits": 6, "showTime": 1.0, "keypadFadeTime": 3, "isShuffledKeypad": true },
-  { "level": 56, "digits": 6, "showTime": 0.8, "keypadFadeTime": 2, "isShuffledKeypad": true },
-  { "level": 57, "digits": 6, "showTime": 0.5, "keypadFadeTime": 2, "isShuffledKeypad": true },
-  { "level": 58, "digits": 6, "showTime": 0.3, "keypadFadeTime": 2, "isShuffledKeypad": true },
-  { "level": 59, "digits": 6, "showTime": 0.1, "keypadFadeTime": 1, "isShuffledKeypad": true },
-  { "level": 60, "digits": 6, "showTime": 0.05, "keypadFadeTime": 1, "isShuffledKeypad": true }
+  {"level": 1, "digits": 4, "showTime": 3.0, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 2, "digits": 4, "showTime": 3.0, "keypadFadeTime": 3.0, "isShuffledKeypad": true},
+  {"level": 3, "digits": 5, "showTime": 3.0, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 4, "digits": 5, "showTime": 3.0, "keypadFadeTime": 3.0, "isShuffledKeypad": true},
+  {"level": 5, "digits": 6, "showTime": 3.0, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 6, "digits": 6, "showTime": 3.0, "keypadFadeTime": 3.0, "isShuffledKeypad": true},
+  {"level": 7, "digits": 4, "showTime": 2.5, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 8, "digits": 4, "showTime": 2.5, "keypadFadeTime": 2.5, "isShuffledKeypad": true},
+  {"level": 9, "digits": 5, "showTime": 2.5, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 10, "digits": 5, "showTime": 2.5, "keypadFadeTime": 2.5, "isShuffledKeypad": true},
+  {"level": 11, "digits": 6, "showTime": 2.5, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 12, "digits": 6, "showTime": 2.5, "keypadFadeTime": 2.5, "isShuffledKeypad": true},
+  {"level": 13, "digits": 4, "showTime": 2.0, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 14, "digits": 4, "showTime": 2.0, "keypadFadeTime": 2.0, "isShuffledKeypad": true},
+  {"level": 15, "digits": 5, "showTime": 2.0, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 16, "digits": 5, "showTime": 2.0, "keypadFadeTime": 2.0, "isShuffledKeypad": true},
+  {"level": 17, "digits": 6, "showTime": 2.0, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 18, "digits": 6, "showTime": 2.0, "keypadFadeTime": 2.0, "isShuffledKeypad": true},
+  {"level": 19, "digits": 4, "showTime": 1.5, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 20, "digits": 4, "showTime": 1.5, "keypadFadeTime": 2.0, "isShuffledKeypad": true},
+  {"level": 21, "digits": 5, "showTime": 1.5, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 22, "digits": 5, "showTime": 1.5, "keypadFadeTime": 2.0, "isShuffledKeypad": true},
+  {"level": 23, "digits": 6, "showTime": 1.5, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 24, "digits": 6, "showTime": 1.5, "keypadFadeTime": 2.0, "isShuffledKeypad": true},
+  {"level": 25, "digits": 4, "showTime": 1.0, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 26, "digits": 4, "showTime": 1.0, "keypadFadeTime": 2.0, "isShuffledKeypad": true},
+  {"level": 27, "digits": 5, "showTime": 1.0, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 28, "digits": 5, "showTime": 1.0, "keypadFadeTime": 2.0, "isShuffledKeypad": true},
+  {"level": 29, "digits": 6, "showTime": 1.0, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 30, "digits": 6, "showTime": 1.0, "keypadFadeTime": 2.0, "isShuffledKeypad": true},
+  {"level": 31, "digits": 4, "showTime": 0.8, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 32, "digits": 4, "showTime": 0.8, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 33, "digits": 5, "showTime": 0.8, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 34, "digits": 5, "showTime": 0.8, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 35, "digits": 6, "showTime": 0.8, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 36, "digits": 6, "showTime": 0.8, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 37, "digits": 4, "showTime": 0.5, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 38, "digits": 4, "showTime": 0.5, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 39, "digits": 5, "showTime": 0.5, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 40, "digits": 5, "showTime": 0.5, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 41, "digits": 6, "showTime": 0.5, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 42, "digits": 6, "showTime": 0.5, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 43, "digits": 4, "showTime": 0.3, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 44, "digits": 4, "showTime": 0.3, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 45, "digits": 5, "showTime": 0.3, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 46, "digits": 5, "showTime": 0.3, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 47, "digits": 6, "showTime": 0.3, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 48, "digits": 6, "showTime": 0.3, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 49, "digits": 4, "showTime": 0.2, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 50, "digits": 4, "showTime": 0.2, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 51, "digits": 5, "showTime": 0.2, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 52, "digits": 5, "showTime": 0.2, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 53, "digits": 6, "showTime": 0.2, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 54, "digits": 6, "showTime": 0.2, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 55, "digits": 4, "showTime": 0.1, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 56, "digits": 4, "showTime": 0.1, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 57, "digits": 5, "showTime": 0.1, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 58, "digits": 5, "showTime": 0.1, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 59, "digits": 6, "showTime": 0.1, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 60, "digits": 6, "showTime": 0.1, "keypadFadeTime": 1.0, "isShuffledKeypad": true},
+  {"level": 61, "digits": 4, "showTime": 0.08, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 62, "digits": 4, "showTime": 0.08, "keypadFadeTime": 0.5, "isShuffledKeypad": true},
+  {"level": 63, "digits": 5, "showTime": 0.08, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 64, "digits": 5, "showTime": 0.08, "keypadFadeTime": 0.5, "isShuffledKeypad": true},
+  {"level": 65, "digits": 6, "showTime": 0.08, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 66, "digits": 6, "showTime": 0.08, "keypadFadeTime": 0.5, "isShuffledKeypad": true},
+  {"level": 67, "digits": 4, "showTime": 0.05, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 68, "digits": 4, "showTime": 0.05, "keypadFadeTime": 0.5, "isShuffledKeypad": true},
+  {"level": 69, "digits": 5, "showTime": 0.05, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 70, "digits": 5, "showTime": 0.05, "keypadFadeTime": 0.5, "isShuffledKeypad": true},
+  {"level": 71, "digits": 6, "showTime": 0.05, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 72, "digits": 6, "showTime": 0.05, "keypadFadeTime": 0.5, "isShuffledKeypad": true},
+  {"level": 73, "digits": 4, "showTime": 0.03, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 74, "digits": 4, "showTime": 0.03, "keypadFadeTime": 0.3, "isShuffledKeypad": true},
+  {"level": 75, "digits": 5, "showTime": 0.03, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 76, "digits": 5, "showTime": 0.03, "keypadFadeTime": 0.3, "isShuffledKeypad": true},
+  {"level": 77, "digits": 6, "showTime": 0.03, "keypadFadeTime": 0, "isShuffledKeypad": false},
+  {"level": 78, "digits": 6, "showTime": 0.03, "keypadFadeTime": 0.3, "isShuffledKeypad": true}
 ];
 
 let stagesData = DEFAULT_STAGES;
@@ -933,10 +951,11 @@ function handleRoundSuccess() {
 
   gameState.score++;
 
-  if (gameState.currentLevel === 60) {
-    if (60 > gameState.bestLevel) {
-      gameState.bestLevel = 60;
-      localStorage.setItem('memory_moment_best_level', 60);
+  const maxLevel = stagesData.length;
+  if (gameState.currentLevel === maxLevel) {
+    if (maxLevel > gameState.bestLevel) {
+      gameState.bestLevel = maxLevel;
+      localStorage.setItem('memory_moment_best_level', maxLevel);
     }
     setTimeout(showAllClear, 1000);
     return;
@@ -995,9 +1014,15 @@ function showGameOver() {
 }
 
 function showAllClear() {
+  const maxLevel = stagesData.length;
   gameAudio.stopBgm();
   dom.allclearScore.textContent = gameState.score;
-  dom.bestScore.textContent = `Level 60`;
+  dom.bestScore.textContent = `Level ${maxLevel}`;
+
+  const allclearLevelLabel = document.querySelector('#screen-allclear .stat-value.highlight');
+  if (allclearLevelLabel) {
+    allclearLevelLabel.textContent = `Level ${maxLevel}`;
+  }
 
   changeScreen('allclear');
 }
@@ -1021,7 +1046,7 @@ function showStagesScreen() {
 
   dom.stagesGrid.innerHTML = '';
 
-  for (let i = 1; i <= 60; i++) {
+  for (let i = 1; i <= stagesData.length; i++) {
     const stageConfig = stagesData[i - 1] || DEFAULT_STAGES[i - 1] || {};
     const digits = stageConfig.digits || 4;
     const showTime = stageConfig.showTime || 3.0;
@@ -1104,10 +1129,12 @@ function showStagesScreen() {
     actionSection.className = 'stage-action-section';
 
     // 상태/난이도 테마 분류용 클래스를 item 및 row에 덧붙여서 노드와 자릿수 미니 박스의 색상을 동기화함
+    const maxLevel = stagesData.length;
+    const third = Math.floor(maxLevel / 3);
     let themeClass = 'theme-easy';
-    if (i >= 41) {
+    if (i > third * 2) {
       themeClass = 'theme-hard';
-    } else if (i >= 21) {
+    } else if (i > third) {
       themeClass = 'theme-medium';
     }
     item.classList.add(themeClass);
