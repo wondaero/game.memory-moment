@@ -37,7 +37,7 @@ class GameAudio {
     }
 
     // BGM이 활성화 상태인지에 따라 초기 gain(음량) 스무스 설정
-    const targetVolume = this.bgmEnabled ? 0.035 : 0;
+    const targetVolume = this.bgmEnabled ? 0.18 : 0;
     this.bgmGain.gain.setValueAtTime(targetVolume, this.ctx.currentTime);
 
     this.bgmNextNoteTime = this.ctx.currentTime;
@@ -145,7 +145,7 @@ class GameAudio {
   resumeBgm() {
     if (!this.bgmPlaying || !this.bgmGain || !this.bgmEnabled) return;
     const now = this.ctx ? this.ctx.currentTime : 0;
-    this.bgmGain.gain.linearRampToValueAtTime(0.035, now + 0.2);
+    this.bgmGain.gain.linearRampToValueAtTime(0.18, now + 0.2);
   }
 
   // BGM 타이머 루프를 완전 멈춤
@@ -165,7 +165,7 @@ class GameAudio {
     // 오디오 컨텍스트가 로드된 상태에서 스무스하게 볼륨 증감
     if (this.bgmGain) {
       const now = this.ctx ? this.ctx.currentTime : 0;
-      this.bgmGain.gain.linearRampToValueAtTime(enabled ? 0.035 : 0, now + 0.25);
+      this.bgmGain.gain.linearRampToValueAtTime(enabled ? 0.18 : 0, now + 0.25);
     }
 
     // 설정은 켰으나 BGM 루프가 아예 안 돌고 있다면 자동 스타트
@@ -495,10 +495,14 @@ const dom = {
 document.addEventListener('DOMContentLoaded', () => {
   initGame();
 
-  // ⭐️ 사용자 첫 터치 시 배경음악 활성화 (보안 정책 대응)
-  document.addEventListener('click', () => {
+  // ⭐️ 사용자 첫 터치/클릭 시 배경음악 활성화 (보안 정책 대응 - 모바일 터치 및 데스크톱 클릭 대응)
+  const startAudioOnFirstTouch = () => {
     gameAudio.startBgm();
-  }, { once: true });
+    document.removeEventListener('click', startAudioOnFirstTouch);
+    document.removeEventListener('touchstart', startAudioOnFirstTouch);
+  };
+  document.addEventListener('click', startAudioOnFirstTouch);
+  document.addEventListener('touchstart', startAudioOnFirstTouch);
 });
 
 async function initGame() {
@@ -517,7 +521,10 @@ async function initGame() {
 
   // 이벤트 리스너를 즉시 연결하여 첫 번째 클릭/터치 반응이 지연되지 않도록 함
   // 시작하기 버튼을 클릭하면 메인 허브인 스테이지 선택 화면으로 진입합니다.
-  dom.btnStart.addEventListener('click', showStagesScreen);
+  dom.btnStart.addEventListener('click', () => {
+    gameAudio.startBgm();
+    showStagesScreen();
+  });
   dom.btnStagesBack.addEventListener('click', () => {
     gameAudio.init();
     gameAudio.playClick();
@@ -533,7 +540,10 @@ async function initGame() {
   dom.btnAbandonConfirm.addEventListener('click', confirmAbandonGame);
 
   // 설정 관련 버튼 이벤트 연결
-  dom.btnSettings.addEventListener('click', showSettingsModal);
+  dom.btnSettings.addEventListener('click', () => {
+    gameAudio.startBgm();
+    showSettingsModal();
+  });
   dom.btnSettingsClose.addEventListener('click', closeSettingsModal);
   
   dom.toggleBgm.addEventListener('change', (e) => {
