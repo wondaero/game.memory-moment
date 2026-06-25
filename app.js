@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function initGame() {
-  dom.bestScore.textContent = `Level ${gameState.bestLevel}`;
+  if (dom.bestScore) dom.bestScore.textContent = `Level ${gameState.bestLevel}`;
 
   // 저장된 테마 불러와서 복원
   setTheme(gameState.currentTheme);
@@ -1033,7 +1033,7 @@ function showGameOver() {
 
   dom.endLevel.textContent = `Level ${gameState.currentLevel}`;
   dom.endScore.textContent = gameState.score;
-  dom.bestScore.textContent = `Level ${gameState.bestLevel}`;
+  if (dom.bestScore) dom.bestScore.textContent = `Level ${gameState.bestLevel}`;
 
   changeScreen('gameover');
 }
@@ -1042,7 +1042,7 @@ function showAllClear() {
   const maxLevel = stagesData.length;
   gameAudio.stopBgm();
   dom.allclearScore.textContent = gameState.score;
-  dom.bestScore.textContent = `Level ${maxLevel}`;
+  if (dom.bestScore) dom.bestScore.textContent = `Level ${maxLevel}`;
 
   const allclearLevelLabel = document.querySelector('#screen-allclear .stat-value.highlight');
   if (allclearLevelLabel) {

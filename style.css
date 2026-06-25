@@ -7,6 +7,7 @@
   --panel-border: rgba(255, 255, 255, 0.08);
   --text-primary: #ffffff;
   --text-primary-shadow: rgba(255, 255, 255, 0.25);
+  --modal-overlay-bg: rgba(8, 6, 22, 0.85);
   --logo-gradient: linear-gradient(135deg, #ffffff 30%, #a855f7 70%, #ec4899 100%);
   --logo-shadow: 0 10px 30px rgba(168, 85, 247, 0.25);
   --decor-ring-outer: rgba(168, 85, 247, 0.3);
@@ -42,6 +43,7 @@ body.theme-aurora {
   --panel-border: rgba(255, 255, 255, 0.06);
   --text-primary: #e2fbf5;
   --text-primary-shadow: rgba(13, 245, 200, 0.25);
+  --modal-overlay-bg: rgba(2, 10, 10, 0.9);
   --logo-gradient: linear-gradient(135deg, #ffffff 30%, #0df5c8 70%, #0ea5e9 100%);
   --logo-shadow: 0 10px 30px rgba(13, 245, 200, 0.25);
   --decor-ring-outer: rgba(13, 245, 200, 0.3);
@@ -77,6 +79,7 @@ body.theme-sunset {
   --panel-border: rgba(217, 119, 6, 0.18);
   --text-primary: #5c2c06;        /* 가독성을 높이기 위해 짙은 갈색조로 변경 */
   --text-primary-shadow: rgba(92, 44, 6, 0.15);
+  --modal-overlay-bg: rgba(253, 230, 138, 0.82);
   --logo-gradient: linear-gradient(135deg, #5c2c06 25%, #d97706 70%, #ea580c 100%);
   --logo-shadow: 0 4px 15px rgba(120, 53, 15, 0.12);
   --decor-ring-outer: rgba(217, 119, 6, 0.3);
@@ -1253,7 +1256,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(8, 6, 22, 0.8);
+  background: var(--modal-overlay-bg, rgba(8, 6, 22, 0.8));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
