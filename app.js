@@ -486,6 +486,7 @@ const dom = {
   btnSettings: document.getElementById('btn-settings'),
   modalSettings: document.getElementById('modal-settings'),
   btnSettingsClose: document.getElementById('btn-settings-close'),
+  btnQuitGame: document.getElementById('btn-quit-game'),
   toggleBgm: document.getElementById('toggle-bgm'),
   toggleSfx: document.getElementById('toggle-sfx'),
   btnThemeOptions: document.querySelectorAll('.btn-theme-option'),
@@ -545,6 +546,20 @@ async function initGame() {
     showSettingsModal();
   });
   dom.btnSettingsClose.addEventListener('click', closeSettingsModal);
+
+  // 종료하기 관련 버튼 이벤트 연결
+  if (dom.btnQuitGame) {
+    dom.btnQuitGame.addEventListener('click', () => {
+      gameAudio.init();
+      gameAudio.playClick();
+      if (confirm('게임을 종료하시겠습니까? (이 브라우저 탭을 닫으실 수 있습니다)')) {
+        window.close();
+        setTimeout(() => {
+          alert('웹 브라우저 보안 정책에 의해 자동으로 창을 닫을 수 없습니다. 직접 브라우저 탭을 닫아주세요.');
+        }, 300);
+      }
+    });
+  }
   
   dom.toggleBgm.addEventListener('change', (e) => {
     gameAudio.setBgmEnabled(e.target.checked);

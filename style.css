@@ -7,6 +7,10 @@
   --panel-border: rgba(255, 255, 255, 0.08);
   --text-primary: #ffffff;
   --text-primary-shadow: rgba(255, 255, 255, 0.25);
+  --logo-gradient: linear-gradient(135deg, #ffffff 30%, #a855f7 70%, #ec4899 100%);
+  --logo-shadow: 0 10px 30px rgba(168, 85, 247, 0.25);
+  --decor-ring-outer: rgba(168, 85, 247, 0.3);
+  --decor-ring-inner: rgba(59, 130, 246, 0.2);
   --text-secondary: #94a3b8;
   --color-primary: #a855f7;       /* Neon Purple */
   --color-primary-glow: rgba(168, 85, 247, 0.4);
@@ -38,6 +42,10 @@ body.theme-aurora {
   --panel-border: rgba(255, 255, 255, 0.06);
   --text-primary: #e2fbf5;
   --text-primary-shadow: rgba(13, 245, 200, 0.25);
+  --logo-gradient: linear-gradient(135deg, #ffffff 30%, #0df5c8 70%, #0ea5e9 100%);
+  --logo-shadow: 0 10px 30px rgba(13, 245, 200, 0.25);
+  --decor-ring-outer: rgba(13, 245, 200, 0.3);
+  --decor-ring-inner: rgba(14, 165, 233, 0.25);
   --text-secondary: #6cb6a3;
   --color-primary: #0df5c8;       /* Neon Mint */
   --color-primary-glow: rgba(13, 245, 200, 0.4);
@@ -69,6 +77,10 @@ body.theme-sunset {
   --panel-border: rgba(217, 119, 6, 0.18);
   --text-primary: #5c2c06;        /* 가독성을 높이기 위해 짙은 갈색조로 변경 */
   --text-primary-shadow: rgba(92, 44, 6, 0.15);
+  --logo-gradient: linear-gradient(135deg, #5c2c06 25%, #d97706 70%, #ea580c 100%);
+  --logo-shadow: 0 4px 15px rgba(120, 53, 15, 0.12);
+  --decor-ring-outer: rgba(217, 119, 6, 0.3);
+  --decor-ring-inner: rgba(234, 88, 12, 0.2);
   --text-secondary: #92400e;      /* 더 짙은 보조 텍스트 */
   --color-primary: #d97706;       /* Warm Amber */
   --color-primary-glow: rgba(217, 119, 6, 0.25);
@@ -231,10 +243,10 @@ body {
   font-size: 2.8rem;
   font-weight: 800;
   letter-spacing: -0.05em;
-  background: linear-gradient(135deg, #ffffff 30%, #a855f7 70%, #ec4899 100%);
+  background: var(--logo-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+  text-shadow: var(--logo-shadow);
   margin-bottom: 10px;
 }
 
@@ -260,7 +272,7 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 2px dashed rgba(168, 85, 247, 0.3);
+  border: 2px dashed var(--decor-ring-outer);
   animation: rotateClockwise 20s linear infinite;
 }
 
@@ -269,7 +281,7 @@ body {
   width: 75%;
   height: 75%;
   border-radius: 50%;
-  border: 2px solid rgba(59, 130, 246, 0.2);
+  border: 2px solid var(--decor-ring-inner);
   animation: rotateCounterClockwise 12s linear infinite;
 }
 
@@ -277,7 +289,7 @@ body {
   font-size: 2.2rem;
   font-weight: 800;
   color: var(--text-primary);
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 15px var(--text-primary-shadow, rgba(255, 255, 255, 0.5));
   animation: pulseScale 3s ease-in-out infinite;
 }
 
@@ -325,6 +337,37 @@ body {
 .btn-primary:active {
   transform: scale(0.97);
   box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+}
+
+.home-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.home-actions .btn-primary {
+  margin-bottom: 0;
+}
+
+.btn-secondary-action {
+  background: var(--keypad-btn-bg);
+  border: 1px solid var(--keypad-btn-border);
+  color: var(--text-primary);
+  padding: 16px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 16px;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.btn-secondary-action:active {
+  transform: scale(0.97);
+  background: var(--keypad-btn-active-bg);
 }
 
 /* 2. 통합 인게임 화면 (Game Screen - 카운트다운/암기/입력 통합) */
